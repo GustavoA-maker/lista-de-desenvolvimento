@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import ToolList from './Components/ToolList';
+import ToolForm from './Components/ToolForm';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [tools, setTools] = useState([]);
+
+  const addTool = (tool) => {
+    setTools([...tools, tool]);
+  };
+
+  const removeTool = (index) => {
+    setTools(tools.filter((_, i) => i !== index));
+  };
+
+  const editTool = (index, updatedTool) => {
+    const updatedTools = tools.map((tool, i) => (i === index ? updatedTool : tool));
+    setTools(updatedTools);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Lista de Ferramentas de Desenvolvimento</h1>
+      <ToolForm addTool={addTool} />
+      <ToolList tools={tools} removeTool={removeTool} editTool={editTool} />
     </div>
   );
-}
+};
 
 export default App;
